@@ -76,7 +76,7 @@ class _CadastroState extends State<Cadastro> {
                     _insertUser();
                     Navigator.pop(context);
                   },
-                  child: Text("Teste"))
+                  child: Text("Finalizar Cadastro"))
             ]),
 
     );

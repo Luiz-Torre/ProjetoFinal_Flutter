@@ -3,55 +3,21 @@ import 'package:loja/helper/AnuncioHelper.dart';
 import 'package:loja/model/Anuncio.dart';
 import "package:intl/intl.dart";
 import 'package:loja/pages/home.dart';
-import 'package:loja/pages/meus_anuncios.dart';
+import 'package:loja/pages/produtos.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loja/pages/login.dart';
 
 import '../model/Anuncio.dart';
 import 'cadastro.dart';
 
-const List<String> list = <String>[
-  'Todos',
-  'AC',
-  'AL',
-  'AM',
-  'AP',
-  'BA',
-  'CE',
-  'DF',
-  'ES',
-  'GO',
-  'MA',
-  'MG',
-  'MS',
-  'MT',
-  'PA',
-  'PB',
-  'PE',
-  'PI',
-  'PR',
-  'RJ',
-  'RN',
-  'RO',
-  'RR',
-  'RS',
-  'SC',
-  'SE',
-  'SP',
-  'TO'
-];
-
-class Produto extends StatefulWidget {
-  const Produto({super.key});
+class meuAnuncio extends StatefulWidget {
+  const meuAnuncio({super.key});
 
   @override
-  State<Produto> createState() => _ProdutoState();
+  State<meuAnuncio> createState() => _meuAnuncioState();
 }
 
-class _ProdutoState extends State<Produto> {
-  TextEditingController _catFiltroController = TextEditingController(text: "");
-  String _filtroEstado = list.first;
-
+class _meuAnuncioState extends State<meuAnuncio> {
   String? email_logado;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -68,28 +34,6 @@ class _ProdutoState extends State<Produto> {
     var email = prefs.getString("email");
     email_logado = email;
     return email;
-  }
-
-  void _insertAnuncio() async {
-    String title = titleController.text;
-    String description = descriptionController.text;
-    String state = stateController.text;
-    String price = priceController.text;
-    String telephone = telephoneController.text;
-    String category = categoryController.text;
-    var emailUser = await main();
-    Anuncio anuncio = Anuncio(
-        state, title, price, telephone, category, description, emailUser);
-
-    int result = await _db.insertAnuncio(anuncio);
-
-    titleController.clear();
-    descriptionController.clear();
-    stateController.clear();
-    priceController.clear();
-    telephoneController.clear();
-    categoryController.clear();
-    _getAnuncios();
   }
 
   void _insertUpdateAnuncio({Anuncio? selectedAnuncio}) async {
@@ -131,12 +75,13 @@ class _ProdutoState extends State<Produto> {
     List results = await _db.getAnuncios();
     anuncios.clear();
 
+    var emailUser = await main();
     for (var item in results) {
       Anuncio anuncio = Anuncio.fromMap(item);
-      if ((anuncio.category!.toLowerCase().contains(_catFiltroController.text.toLowerCase())) &&
-          (anuncio.state == _filtroEstado || _filtroEstado == 'Todos')) {
+      if(anuncio.emailUser == emailUser){
         anuncios.add(anuncio);
       }
+      
     }
 
     setState(() {});
@@ -249,7 +194,6 @@ class _ProdutoState extends State<Produto> {
   Widget build(BuildContext context) {
     String? var_logado;
     main().then((retorno) {});
-    if (email_logado != null && email_logado != '') {
       return Scaffold(
         appBar: AppBar(
           title: Text("Lista de Produtos"),
@@ -257,162 +201,98 @@ class _ProdutoState extends State<Produto> {
         ),
         body: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                signOut();
-              },
-              child: Text("Logout"),
-            ),
             Center(
-              child: Column(
-                children: <Widget>[
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const meuAnuncio()),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text('Meus Anuncios'),
-                        ],
-                      ),
+            child: Column(
+              children: <Widget>[
+                OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Produto()),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(0.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text('Voltar para Todos Produtos'),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            Row(children: [
-              DropdownButton<String>(
-                value: _filtroEstado,
-                icon: const Icon(Icons.arrow_downward),
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
                 ),
-                onChanged: (String? value) {
-                  setState(() {
-                    _filtroEstado = value!;
-                    _getAnuncios();
-                  });
-                },
-                items: list.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ]),
-            TextField(
-              decoration: InputDecoration(
-                  labelText: "Digite corretamente a categoria desejada "),
-              controller: _catFiltroController,
-              onChanged: (var num) async{
-                _getAnuncios();
-              },
+              ],
             ),
+          ),
             Expanded(
                 child: ListView.builder(
                     itemCount: anuncios.length,
                     itemBuilder: (context, index) {
                       final item = anuncios[index];
 
-                      return Center(
+                      return Dismissible(
                         key: ValueKey(item),
                         child: ListTile(
                           title: Text(item.title!),
                           subtitle: Text(
-                              "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.price}\nPreço: ${item.price}\nCategoria: ${item.category}\nEmail do Vendedor: ${item.emailUser}"),
+                              "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.price}\nPreço: ${item.price}\nCategoria: ${item.category}"),
+                        ),
+                        confirmDismiss: (DismissDirection direction) async {
+                          if (direction == DismissDirection.endToStart) {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Tela de confirmação"),
+                                  content: const Text(
+                                      "Tem certeza que deseja excluir?"),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          _removeAnuncio(item.id);
+                                          Navigator.of(context).pop(true);
+                                        },
+                                        child: const Text("Aceito Deletar")),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: const Text("Cancelar"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            _showRegisterScreen(anuncio: item);
+                          }
+                        },
+                        secondaryBackground: Container(
+                          color: Colors.red,
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                )
+                              ]),
+                        ),
+                        background: Container(
+                          color: Colors.green,
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                )
+                              ]),
                         ),
                       );
                     }))
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 36, 36, 42),
-          foregroundColor: Color.fromARGB(255, 75, 74, 79),
-          child: Icon(Icons.add),
-          onPressed: () => _showRegisterScreen(),
-        ),
       );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Lista de Produtos"),
-          backgroundColor: Color.fromARGB(255, 36, 36, 42),
-        ),
-        body: Column(
-          children: [
-            Center(
-              child: Column(
-                children: <Widget>[
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text('Fazer Login'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                children: <Widget>[
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Cadastro()),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text('Cadastrar Conta'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Text("Todos os produtos cadastrados"),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: anuncios.length,
-                    itemBuilder: (context, index) {
-                      final item = anuncios[index];
-
-                      return Center(
-                          key: ValueKey(item),
-                          child: ListTile(
-                            title: Text(item.title!),
-                            subtitle: Text(
-                                "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.state}\nPreço: ${item.price}\nCategoria: ${item.category}"),
-                          ));
-                    }))
-          ],
-        ),
-      );
-    }
   }
 }
