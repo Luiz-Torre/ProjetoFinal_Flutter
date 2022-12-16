@@ -73,21 +73,24 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
             title: Text(
               widget.title,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           body: Column(children: [
             Center(
+            child:Container(
+              margin: const EdgeInsets.all(10.0),
               child: Column(
-                children: <Widget>[
+              children: <Widget>[
                   OutlinedButton(
                     onPressed: () {
                       signOut();
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Logout'),
                         ],
                       ),
@@ -95,8 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-            ),
-            Center(
+            )
+          ),
+            Container(
+              margin: const EdgeInsets.all(10.0),
               child: Column(
                 children: <Widget>[
                   OutlinedButton(
@@ -108,9 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Cadastrar Conta'),
                         ],
                       ),
@@ -119,7 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Center(
+            Container(
+              margin: const EdgeInsets.all(10.0),
               child: Column(
                 children: <Widget>[
                   OutlinedButton(
@@ -131,9 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Ver produtos'),
                         ],
                       ),
@@ -151,17 +159,19 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
             title: Text(
               widget.title,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           body: Column(children: [
             Center(
-              child: Column(
-                children: <Widget>[
-                  OutlinedButton(
-                    onPressed: () {
-                      if (Home.var_logado == 0) {
-                        Navigator.push(
+              child: Container(
+                margin: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: <Widget>[
+                    OutlinedButton(
+                      onPressed: () {
+                        if (Home.var_logado == 0) {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const LoginPage()));
@@ -172,9 +182,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Fazer Login'),
                         ],
                       ),
@@ -182,8 +193,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-            ),
-            Center(
+            )
+          ),
+            Container(
+              margin: const EdgeInsets.all(10.0),
               child: Column(
                 children: <Widget>[
                   OutlinedButton(
@@ -195,9 +208,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Cadastrar Conta'),
                         ],
                       ),
@@ -206,7 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Center(
+            Container(
+              margin: const EdgeInsets.all(10.0),
               child: Column(
                 children: <Widget>[
                   OutlinedButton(
@@ -218,9 +233,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Ver produtos'),
                         ],
                       ),

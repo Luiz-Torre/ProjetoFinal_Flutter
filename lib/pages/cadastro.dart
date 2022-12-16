@@ -49,26 +49,26 @@ class _CadastroState extends State<Cadastro> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastro"),
-        backgroundColor: Color.fromARGB(255, 36, 36, 42),
+        title: const Text("Cadastro"),
+        backgroundColor: const Color.fromARGB(255, 36, 36, 42),
       ),
       body: Column(mainAxisSize: MainAxisSize.min, children: [
               TextField(
                 controller: nomeController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Nome", hintText: "Digite o nome"),
               ),
               TextField(
                 controller: emailController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Email", hintText: "Digite o email"),
               ),
               TextField(
                 controller: senhaController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Senha", hintText: "Digite a senha"),
               ),
               TextButton(
@@ -76,7 +76,7 @@ class _CadastroState extends State<Cadastro> {
                     _insertUser();
                     Navigator.pop(context);
                   },
-                  child: Text("Finalizar Cadastro"))
+                  child: const Text("Finalizar Cadastro"))
             ]),
 
     );

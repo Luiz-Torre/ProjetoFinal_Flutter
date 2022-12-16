@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:loja/helper/AnuncioHelper.dart';
 import 'package:loja/model/Anuncio.dart';
-import "package:intl/intl.dart";
 import 'package:loja/pages/home.dart';
 import 'package:loja/pages/produtos.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loja/pages/login.dart';
 
 import '../model/Anuncio.dart';
-import 'cadastro.dart';
 
 class meuAnuncio extends StatefulWidget {
   const meuAnuncio({super.key});
@@ -115,45 +113,47 @@ class _meuAnuncioState extends State<meuAnuncio> {
         builder: (context) {
           return AlertDialog(
             title: Text(saveUpdateText),
-            content: Column(mainAxisSize: MainAxisSize.min, children: [
+            content: SingleChildScrollView(
+              child:Column(mainAxisSize: MainAxisSize.min, children: [
               TextField(
                 controller: titleController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Título", hintText: "Digite o título"),
               ),
               TextField(
                 controller: descriptionController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Descrição", hintText: "Digite a descrição"),
               ),
               TextField(
                 controller: stateController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Sigla do Estado",
                     hintText: "Digite a sigla do Estado"),
               ),
               TextField(
                 controller: priceController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Preço", hintText: "Digite o preço"),
               ),
               TextField(
                 controller: telephoneController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Telefone", hintText: "Digite o telefone"),
               ),
               TextField(
                 controller: categoryController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Categoria", hintText: "Digite a categoria"),
               )
-            ]),
+            ])
+            ),
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
@@ -196,8 +196,8 @@ class _meuAnuncioState extends State<meuAnuncio> {
     main().then((retorno) {});
       return Scaffold(
         appBar: AppBar(
-          title: Text("Lista de Produtos"),
-          backgroundColor: Color.fromARGB(255, 36, 36, 42),
+          title: const Text("Lista de Produtos"),
+          backgroundColor: const Color.fromARGB(255, 36, 36, 42),
         ),
         body: Column(
           children: [
@@ -212,10 +212,10 @@ class _meuAnuncioState extends State<meuAnuncio> {
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.all(0.0),
+                    padding:const EdgeInsets.all(0.0),
                     child: Column(
-                      children: <Widget>[
-                        Text('Voltar para Todos Produtos'),
+                      children: const <Widget>[
+                      Text('Voltar para Todos Produtos'),
                       ],
                     ),
                   ),
@@ -231,11 +231,18 @@ class _meuAnuncioState extends State<meuAnuncio> {
 
                       return Dismissible(
                         key: ValueKey(item),
-                        child: ListTile(
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color:  Color.fromARGB(255, 193, 103, 253),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ListTile(
                           title: Text(item.title!),
                           subtitle: Text(
-                              "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.price}\nPreço: ${item.price}\nCategoria: ${item.category}"),
+                              "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.price}\nPreço: ${item.state}\nCategoria: ${item.category}\nEmail do Vendedor: ${item.emailUser}"),
                         ),
+                      ),
                         confirmDismiss: (DismissDirection direction) async {
                           if (direction == DismissDirection.endToStart) {
                             return await showDialog(
@@ -270,7 +277,7 @@ class _meuAnuncioState extends State<meuAnuncio> {
                           padding: EdgeInsets.all(16),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
+                              children: const [
                                 Icon(
                                   Icons.delete,
                                   color: Colors.white,
@@ -279,10 +286,10 @@ class _meuAnuncioState extends State<meuAnuncio> {
                         ),
                         background: Container(
                           color: Colors.green,
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Icon(
                                   Icons.edit,
                                   color: Colors.white,

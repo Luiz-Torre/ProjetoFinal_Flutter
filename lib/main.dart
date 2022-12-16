@@ -6,7 +6,7 @@ import 'pages/home.dart';
 
 void main() {
   LoginStatus? notSignIn;
-  runApp(MaterialApp(
+  runApp( const MaterialApp(
     title:  "Loja",
     debugShowCheckedModeBanner: false,
     home: Home(),

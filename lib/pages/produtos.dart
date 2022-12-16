@@ -170,49 +170,51 @@ class _ProdutoState extends State<Produto> {
         builder: (context) {
           return AlertDialog(
             title: Text(saveUpdateText),
-            content: Column(mainAxisSize: MainAxisSize.min, children: [
+            content: SingleChildScrollView(
+              child:Column(mainAxisSize: MainAxisSize.min, children: [
               TextField(
                 controller: titleController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Título", hintText: "Digite o título"),
               ),
               TextField(
                 controller: descriptionController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Descrição", hintText: "Digite a descrição"),
               ),
               TextField(
                 controller: stateController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Sigla do Estado",
                     hintText: "Digite a sigla do Estado"),
               ),
               TextField(
                 controller: priceController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Preço", hintText: "Digite o preço"),
               ),
               TextField(
                 controller: telephoneController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Telefone", hintText: "Digite o telefone"),
               ),
               TextField(
                 controller: categoryController,
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Categoria", hintText: "Digite a categoria"),
               )
-            ]),
+            ])
+            ),
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text("Cancelar")),
+                  child: const Text("Cancelar")),
               TextButton(
                   onPressed: () {
                     _insertUpdateAnuncio(selectedAnuncio: anuncio);
@@ -252,8 +254,8 @@ class _ProdutoState extends State<Produto> {
     if (email_logado != null && email_logado != '') {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Lista de Produtos"),
-          backgroundColor: Color.fromARGB(255, 36, 36, 42),
+          title: const Text("Lista de Produtos"),
+          backgroundColor: const Color.fromARGB(255, 36, 36, 42),
         ),
         body: Column(
           children: [
@@ -261,7 +263,9 @@ class _ProdutoState extends State<Produto> {
               onPressed: () {
                 signOut();
               },
-              child: Text("Logout"),
+              child: Container(
+                width: 150,
+                child:const Text("Logout", textAlign: TextAlign.center,) ,),
             ),
             Center(
               child: Column(
@@ -275,9 +279,10 @@ class _ProdutoState extends State<Produto> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(0.0),
+                      width: 150,
+                      padding: const EdgeInsets.all(0.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Meus Anuncios'),
                         ],
                       ),
@@ -311,7 +316,7 @@ class _ProdutoState extends State<Produto> {
               ),
             ]),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText: "Digite corretamente a categoria desejada "),
               controller: _catFiltroController,
               onChanged: (var num) async{
@@ -326,27 +331,34 @@ class _ProdutoState extends State<Produto> {
 
                       return Center(
                         key: ValueKey(item),
-                        child: ListTile(
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 164, 209, 221),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ListTile(
                           title: Text(item.title!),
                           subtitle: Text(
-                              "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.price}\nPreço: ${item.price}\nCategoria: ${item.category}\nEmail do Vendedor: ${item.emailUser}"),
+                              "Descrição do produto: ${item.description}\nTelefone de contato: ${item.telephone}\nEstado: ${item.price}\nPreço: ${item.state}\nCategoria: ${item.category}\nEmail do Vendedor: ${item.emailUser}"),
                         ),
-                      );
+                      )
+                    );
                     }))
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 36, 36, 42),
-          foregroundColor: Color.fromARGB(255, 75, 74, 79),
-          child: Icon(Icons.add),
+          backgroundColor: const Color.fromARGB(255, 36, 36, 42),
+          foregroundColor: const Color.fromARGB(255, 75, 74, 79),
+          child: const Icon(Icons.add),
           onPressed: () => _showRegisterScreen(),
         ),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Lista de Produtos"),
-          backgroundColor: Color.fromARGB(255, 36, 36, 42),
+          title: const Text("Lista de Produtos"),
+          backgroundColor: const Color.fromARGB(255, 36, 36, 42),
         ),
         body: Column(
           children: [
@@ -361,9 +373,9 @@ class _ProdutoState extends State<Produto> {
                               builder: (context) => const LoginPage()));
                     },
                     child: Container(
-                      padding: EdgeInsets.all(0.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Fazer Login'),
                         ],
                       ),
@@ -384,9 +396,9 @@ class _ProdutoState extends State<Produto> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(0.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text('Cadastrar Conta'),
                         ],
                       ),
@@ -395,7 +407,7 @@ class _ProdutoState extends State<Produto> {
                 ],
               ),
             ),
-            Text("Todos os produtos cadastrados"),
+            const Text("Todos os produtos cadastrados"),
             Expanded(
                 child: ListView.builder(
                     itemCount: anuncios.length,

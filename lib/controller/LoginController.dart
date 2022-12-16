@@ -21,7 +21,7 @@ class LoginController {
   Future<User> getLogin(String email, String password) async {
     var db = await con.db;
     String sql = """
-    SELECT * FROM login WHERE email = '${email}' AND password = '${password}' 
+    SELECT * FROM login WHERE email = '$email' AND password = '$password' 
 """;
    
     var res = await db.rawQuery(sql);

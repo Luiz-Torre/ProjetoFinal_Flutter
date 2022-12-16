@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
         LoginPage.loginStatus = LoginStatus.notSignIn;
         return Scaffold(
           appBar: AppBar(
-            title: Text("Login Page"),
+            title: const Text("Login Page"),
           ),
           body: Container(
             child: Center(
@@ -103,22 +103,22 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: TextFormField(
                               onSaved: (newValue) => _email = newValue,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "email",
                                 border: OutlineInputBorder(),
                               ),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: TextFormField(
                               onSaved: (newValue) => _password = newValue,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "Password",
-                                border: UnderlineInputBorder(),
+                                border: OutlineInputBorder(),
                               ),
                             ),
                           )
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                       )),
                   ElevatedButton(
                     onPressed: _submit,
-                    child: Text("Login"),
+                    child: const Text("Login"),
                   )
                 ],
               ),
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
       case LoginStatus.signIn:
         LoginPage.loginStatus = LoginStatus.signIn;
 
-        return Home();
+        return const Home();
     }
   }
 }

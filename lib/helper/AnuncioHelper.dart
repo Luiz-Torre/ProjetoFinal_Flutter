@@ -64,7 +64,7 @@ class AnuncioHelper {
     var database = await db;
 
     String sql = "SELECT * FROM $tableName ORDER BY title DESC";
-    List anuncios = await database!.rawQuery(sql);
+    List anuncios = await database.rawQuery(sql);
 
     return anuncios;
   }
@@ -73,7 +73,7 @@ class AnuncioHelper {
   Future<int> deleteAnuncio(int id) async {
     var database = await db;
 
-    int result = await database!.delete(
+    int result = await database.delete(
       tableName,
       where: "id = ?",
       whereArgs: [id]
@@ -85,7 +85,7 @@ class AnuncioHelper {
   Future<int> updateAnuncio(Anuncio anuncio) async {
     var database = await db;
 
-    int result = await database!.update(
+    int result = await database.update(
       tableName,
       anuncio.toMap(),
       where: "id = ?",
